@@ -24,10 +24,7 @@ export function QuestionItem({ item, currentQuestionId }: Props) {
 	const [isLoading, setIsLoading] = useState(false)
 	const [chosenId, setChosenId] = useState()
 
-	const onChangeRadio = (e: RadioChangeEvent) => {
-		console.log('radio checked', e.target.value)
-		setChosenId(e.target.value)
-	}
+	const onChangeRadio = (e: RadioChangeEvent) => setChosenId(e.target.value)
 
 	const { data } = useQuiz(item.quizId.toString())
 	const getNextLink = (): number => {
