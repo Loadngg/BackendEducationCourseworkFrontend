@@ -1,13 +1,13 @@
 export interface ILecture {
-	id: React.Key
+	id: number
 	title: string
 	text: string
 	materials?: ILectureMaterial[]
 }
 
 export interface ILectureMaterial {
-	id: React.Key
+	id: number
 	title: string
 	fileLink: string
-	lectureId: React.Key
+	lectureId: number
 }

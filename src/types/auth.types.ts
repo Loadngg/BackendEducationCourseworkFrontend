@@ -4,7 +4,7 @@ export interface IAuthForm {
 }
 
 export interface IUser {
-	id: React.Key
+	id: number
 	login: string
 	password: string
 }

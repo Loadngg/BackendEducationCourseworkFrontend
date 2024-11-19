@@ -1,15 +1,15 @@
 export interface IUserQuiz {
-	id: React.Key
-	userId: React.Key
-	quizId: React.Key
+	id: number
+	userId: number
+	quizId: number
 	score: number
 }
 
 export interface IUserAnswer {
-	id: React.Key
-	userId: React.Key
-	questionId: React.Key
-	answerId: React.Key
+	id: number
+	userId: number
+	questionId: number
+	answerId: number
 	isCorrect: boolean
 }
 

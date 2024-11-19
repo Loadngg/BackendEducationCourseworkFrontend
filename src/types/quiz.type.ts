@@ -1,19 +1,19 @@
 export interface IQuiz {
-	id: React.Key
+	id: number
 	title: string
 	questions?: IQuizQuestion[]
 }
 
 export interface IQuizQuestion {
-	id: React.Key
+	id: number
 	question: string
-	correctAnswerId: React.Key
-	quizId: React.Key
+	correctAnswerId: number
+	quizId: number
 	answers?: IQuizAnswer[]
 }
 
 export interface IQuizAnswer {
-	id: React.Key
+	id: number
 	text: string
-	questionId: React.Key
+	questionId: number
 }

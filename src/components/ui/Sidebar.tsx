@@ -10,8 +10,7 @@ import { useMutation } from '@tanstack/react-query'
 import { Menu } from 'antd'
 import Sider from 'antd/es/layout/Sider'
 import { ItemType, MenuItemType } from 'antd/es/menu/interface'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { DASHBOARD_PAGES } from '@/config/page-url.config'
@@ -20,32 +19,33 @@ import { authService } from '@/services/auth.service'
 
 export function Sidebar() {
 	const [collapsed, setCollapsed] = useState(true)
-	const router = useRouter()
+	const { push } = useRouter()
+	const pathname = usePathname()
 
 	const { mutate } = useMutation({
 		mutationKey: ['logout'],
 		mutationFn: () => authService.logout(),
-		onSuccess: () => router.push(DASHBOARD_PAGES.AUTH),
+		onSuccess: () => push(DASHBOARD_PAGES.AUTH),
 	})
 
 	const menu_items: ItemType<MenuItemType>[] = [
 		{
-			key: '1',
+			key: DASHBOARD_PAGES.PROFILE,
 			icon: <UserOutlined />,
-			label: <Link href={DASHBOARD_PAGES.PROFILE}>Профиль</Link>,
+			label: <a href={DASHBOARD_PAGES.PROFILE}>Профиль</a>,
 		},
 		{
-			key: '2',
+			key: DASHBOARD_PAGES.LECTURES,
 			icon: <BookOutlined />,
-			label: <Link href={DASHBOARD_PAGES.LECTURES}>Лекции</Link>,
+			label: <a href={DASHBOARD_PAGES.LECTURES}>Лекции</a>,
 		},
 		{
-			key: '3',
+			key: DASHBOARD_PAGES.QUIZZES,
 			icon: <FormOutlined />,
-			label: <Link href={DASHBOARD_PAGES.QUIZZES}>Тесты</Link>,
+			label: <a href={DASHBOARD_PAGES.QUIZZES}>Тесты</a>,
 		},
 		{
-			key: '4',
+			key: DASHBOARD_PAGES.AUTH,
 			icon: <LogoutOutlined />,
 			label: 'Выйти',
 			onClick: () => mutate(),
@@ -62,7 +62,7 @@ export function Sidebar() {
 			<Menu
 				theme='dark'
 				mode='inline'
-				defaultSelectedKeys={['2']}
+				selectedKeys={[pathname]}
 				items={menu_items}
 			/>
 		</Sider>
