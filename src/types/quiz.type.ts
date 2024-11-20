@@ -1,19 +1,19 @@
 export interface IQuiz {
-	id: number
+	id: string
 	title: string
 	questions?: IQuizQuestion[]
 }
 
 export interface IQuizQuestion {
-	id: number
+	id: string
 	question: string
-	correctAnswerId: number
-	quizId: number
+	correctAnswerId: string
+	quizId: string
 	answers?: IQuizAnswer[]
 }
 
 export interface IQuizAnswer {
-	id: number
+	id: string
 	text: string
-	questionId: number
+	questionId: string
 }

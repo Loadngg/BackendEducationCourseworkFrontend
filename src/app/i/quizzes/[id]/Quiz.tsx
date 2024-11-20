@@ -46,13 +46,14 @@ export function Quiz() {
 							},
 						]}
 					/>
-					{isLoading ? (
+					{isLoading || !data?.questions ? (
 						<Skeleton active />
 					) : (
 						<QuizItem
 							item={data}
 							showStartButton
-							startLink={`${DASHBOARD_PAGES.QUIZZES}/${params.id}/questions/1`}
+							startLink={`${DASHBOARD_PAGES.QUIZZES}/${params.id}/questions/${data.questions[0].id}`}
+							completed={false}
 						/>
 					)}
 				</Space>

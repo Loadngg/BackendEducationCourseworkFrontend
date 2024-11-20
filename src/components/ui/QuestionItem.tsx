@@ -15,7 +15,7 @@ import { answerService } from '@/services/answer.service'
 
 interface Props {
 	item: IQuizQuestion
-	currentQuestionId: number
+	currentQuestionId: string
 }
 
 export function QuestionItem({ item, currentQuestionId }: Props) {
@@ -26,9 +26,9 @@ export function QuestionItem({ item, currentQuestionId }: Props) {
 
 	const onChangeRadio = (e: RadioChangeEvent) => setChosenId(e.target.value)
 
-	const { data } = useQuiz(item.quizId.toString())
-	const getNextLink = (): number => {
-		if (!data?.questions) return -1
+	const { data } = useQuiz(item.quizId)
+	const getNextLink = (): string | undefined => {
+		if (!data?.questions) return
 		const currentQuestionIndex = data.questions.findIndex(
 			question => question.id == currentQuestionId
 		)
@@ -36,7 +36,7 @@ export function QuestionItem({ item, currentQuestionId }: Props) {
 			window.location.replace(
 				`${DASHBOARD_PAGES.QUIZZES}/${item.quizId}/completed`
 			)
-			return -1
+			return
 		}
 
 		const nextId = data.questions[currentQuestionIndex + 1].id
@@ -50,8 +50,8 @@ export function QuestionItem({ item, currentQuestionId }: Props) {
 		onSuccess() {
 			setIsLoading(false)
 			const nextLink = getNextLink()
-			if (nextLink === -1) return
-			message.success('Ответ отправлен')
+			if (nextLink === undefined) return
+			messageApi.success('Ответ отправлен')
 			window.location.replace(
 				`${DASHBOARD_PAGES.QUIZZES}/${item.quizId}/questions/${nextLink}`
 			)
@@ -70,6 +70,7 @@ export function QuestionItem({ item, currentQuestionId }: Props) {
 
 		const data: IUserAnswerFormState = {
 			questionId: item.id,
+			quizId: item.quizId,
 			answerId: chosenId,
 			isCorrect: chosenId == item.correctAnswerId,
 		}
@@ -92,7 +93,14 @@ export function QuestionItem({ item, currentQuestionId }: Props) {
 						disabled={isLoading}
 					>
 						<Space direction='vertical'>
-							{item.answers?.map(i => <Radio value={i.id}>{i.text}</Radio>)}
+							{item.answers?.map(i => (
+								<Radio
+									value={i.id}
+									key={i.id}
+								>
+									{i.text}
+								</Radio>
+							))}
 						</Space>
 					</Radio.Group>
 					<Button

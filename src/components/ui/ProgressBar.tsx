@@ -6,13 +6,13 @@ import React, { useEffect, useState } from 'react'
 import useQuiz from '@/hooks/useQuiz'
 
 interface Props {
-	quizId: number
-	currentQuestionId: number
+	quizId: string
+	currentQuestionId: string
 }
 
 export function ProgressBar({ quizId, currentQuestionId }: Props) {
 	const [percentage, setPercentage] = useState<number>(0)
-	const { data, isLoading } = useQuiz(quizId.toString())
+	const { data, isLoading } = useQuiz(quizId)
 
 	useEffect(() => {
 		if (isLoading || !data || !data.questions) return

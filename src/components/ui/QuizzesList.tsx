@@ -8,25 +8,48 @@ import { DASHBOARD_PAGES } from '@/config/page-url.config'
 
 import { QuizItem } from './QuizItem'
 import { quizService } from '@/services/quiz.service'
+import { userService } from '@/services/user.service'
 
 export function QuizzesList() {
-	const { data, isLoading } = useQuery({
+	const quizQuery = useQuery({
 		queryKey: ['quiz'],
 		queryFn: () => quizService.getAll(),
 	})
 
-	return isLoading ? (
+	const userQuizQuery = useQuery({
+		queryKey: ['user'],
+		queryFn: () => userService.getResults(),
+	})
+
+	const userQuizIds = new Set(
+		userQuizQuery.data?.map(userQuiz => userQuiz.quizId)
+	)
+	const completedQuizzes = quizQuery.data?.filter(quiz =>
+		userQuizIds.has(quiz.id)
+	)
+
+	return quizQuery.isLoading ? (
 		<Skeleton active />
 	) : (
 		<List
 			pagination={{ position: 'bottom', align: 'center' }}
 			grid={{ gutter: 16, column: 4 }}
-			dataSource={data}
+			dataSource={quizQuery.data}
 			renderItem={(item, index) => (
 				<List.Item key={index}>
-					<Link href={`${DASHBOARD_PAGES.QUIZZES}/${item?.id}`}>
-						<QuizItem item={item} />
-					</Link>
+					{completedQuizzes?.includes(item) ? (
+						<QuizItem
+							item={item}
+							completed={true}
+						/>
+					) : (
+						<Link href={`${DASHBOARD_PAGES.QUIZZES}/${item?.id}`}>
+							<QuizItem
+								item={item}
+								completed={false}
+							/>
+						</Link>
+					)}
 				</List.Item>
 			)}
 		/>

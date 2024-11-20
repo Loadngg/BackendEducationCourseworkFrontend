@@ -6,12 +6,12 @@ class UserService {
 	private BASE_URL = '/user'
 
 	async getResults() {
-		const response = await axiosWithAuth.get<IUserQuiz>(this.BASE_URL)
+		const response = await axiosWithAuth.get<IUserQuiz[]>(this.BASE_URL)
 		return response.data
 	}
 
 	async createResult(data: IUserQuizFormState) {
-		const response = await axiosWithAuth.post(this.BASE_URL, data)
+		const response = await axiosWithAuth.post(`${this.BASE_URL}/result`, data)
 		return response.data
 	}
 }
