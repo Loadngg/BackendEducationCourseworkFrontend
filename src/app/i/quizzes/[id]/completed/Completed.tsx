@@ -42,7 +42,7 @@ export function Completed() {
 		mutationKey: ['user'],
 		mutationFn: (data: IUserQuizFormState) => userService.createResult(data),
 		onSuccess() {
-			messageApi.success('Ответ отправлен')
+			messageApi.success('Ответы сохранены')
 		},
 		onError(error) {
 			messageApi.error(`Произошла ошибка: "${errorCatch(error)}"`)

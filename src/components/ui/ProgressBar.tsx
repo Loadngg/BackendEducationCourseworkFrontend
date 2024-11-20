@@ -1,7 +1,7 @@
 'use client'
 
-import { Progress, Skeleton } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Flex, Progress, Skeleton } from 'antd'
+import { useEffect, useState } from 'react'
 
 import useQuiz from '@/hooks/useQuiz'
 
@@ -30,9 +30,11 @@ export function ProgressBar({ quizId, currentQuestionId }: Props) {
 	return isLoading ? (
 		<Skeleton active />
 	) : (
-		<Progress
-			percent={percentage}
-			showInfo={false}
-		/>
+		<>
+			<Flex gap={16}>
+				<span>Прогресс:</span>
+				<Progress percent={percentage} />
+			</Flex>
+		</>
 	)
 }

@@ -1,3 +1,5 @@
+'use client'
+
 import { useMutation } from '@tanstack/react-query'
 import { Button, Card, Radio, RadioChangeEvent, Space, message } from 'antd'
 import { useState } from 'react'

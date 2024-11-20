@@ -23,24 +23,22 @@ export function Question() {
 			{isLoading ? (
 				<Skeleton active />
 			) : (
-				<Space
-					direction='vertical'
-					size='middle'
-					className='w-full'
-				>
-					{data && (
-						<>
-							<ProgressBar
-								quizId={data.quizId}
-								currentQuestionId={data.id}
-							/>
-							<QuestionItem
-								item={data}
-								currentQuestionId={data.id}
-							/>
-						</>
-					)}
-				</Space>
+				data && (
+					<Space
+						direction='vertical'
+						size='large'
+						className='w-full'
+					>
+						<ProgressBar
+							quizId={data.quizId}
+							currentQuestionId={data.id}
+						/>
+						<QuestionItem
+							item={data}
+							currentQuestionId={data.id}
+						/>
+					</Space>
+				)
 			)}
 		</Wrapper>
 	)
