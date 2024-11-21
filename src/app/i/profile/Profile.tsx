@@ -1,5 +1,5 @@
 import { UserOutlined } from '@ant-design/icons'
-import { Breadcrumb, Space } from 'antd'
+import { Breadcrumb, Flex, Space } from 'antd'
 
 import { UserResultsList } from '@/components/ui/UserResultsList'
 import { Wrapper } from '@/components/ui/Wrapper'
@@ -14,19 +14,25 @@ export function Profile() {
 				size='middle'
 				className='w-full'
 			>
-				<Breadcrumb
-					items={[
-						{
-							href: DASHBOARD_PAGES.PROFILE,
-							title: (
-								<>
-									<UserOutlined />
-									<span>Профиль</span>
-								</>
-							),
-						},
-					]}
-				/>
+				<Flex
+					justify='space-between'
+					align='center'
+				>
+					<Breadcrumb
+						items={[
+							{
+								href: DASHBOARD_PAGES.PROFILE,
+								title: (
+									<>
+										<UserOutlined />
+										<span>Профиль</span>
+									</>
+								),
+							},
+						]}
+					/>
+					<h1 className='text-2xl font-bold'>Профиль</h1>
+				</Flex>
 				<UserResultsList />
 			</Space>
 		</Wrapper>

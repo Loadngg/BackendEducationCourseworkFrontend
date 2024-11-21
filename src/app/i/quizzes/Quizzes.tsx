@@ -1,5 +1,5 @@
 import { FormOutlined } from '@ant-design/icons'
-import { Breadcrumb, Space } from 'antd'
+import { Breadcrumb, Flex, Space } from 'antd'
 
 import { QuizzesList } from '@/components/ui/QuizzesList'
 import { Wrapper } from '@/components/ui/Wrapper'
@@ -14,19 +14,25 @@ export function Quizzes() {
 				size='middle'
 				className='w-full'
 			>
-				<Breadcrumb
-					items={[
-						{
-							href: DASHBOARD_PAGES.QUIZZES,
-							title: (
-								<>
-									<FormOutlined />
-									<span>Тестирование</span>
-								</>
-							),
-						},
-					]}
-				/>
+				<Flex
+					justify='space-between'
+					align='center'
+				>
+					<Breadcrumb
+						items={[
+							{
+								href: DASHBOARD_PAGES.QUIZZES,
+								title: (
+									<>
+										<FormOutlined />
+										<span>Тестирование</span>
+									</>
+								),
+							},
+						]}
+					/>
+					<h1 className='text-2xl font-bold'>Тестирование по курсу NestJs</h1>
+				</Flex>
 				<QuizzesList />
 			</Space>
 		</Wrapper>

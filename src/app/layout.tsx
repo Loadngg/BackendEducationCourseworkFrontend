@@ -22,9 +22,9 @@ export default function RootLayout({
 	return (
 		<html lang='ru'>
 			<body>
-				<AntdRegistry>
-					<Providers>{children}</Providers>
-				</AntdRegistry>
+				<Providers>
+					<AntdRegistry>{children}</AntdRegistry>
+				</Providers>
 			</body>
 		</html>
 	)

@@ -29,6 +29,10 @@ export function UserResultsList() {
 				<UserResult
 					index={index}
 					item={item}
+					quizQuestionsLength={
+						quizQuery.data?.find(quiz => quiz.id === item.quizId)?.questions
+							?.length
+					}
 					quizTitle={
 						quizQuery.data?.find(quiz => quiz.id === item.quizId)?.title
 					}

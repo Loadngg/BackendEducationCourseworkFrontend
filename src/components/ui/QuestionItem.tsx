@@ -25,6 +25,7 @@ export function QuestionItem({ item, currentQuestionId }: Props) {
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [chosenId, setChosenId] = useState()
+	const [correctAnswer, setCorrectAnswer] = useState<boolean>(false)
 
 	const onChangeRadio = (e: RadioChangeEvent) => setChosenId(e.target.value)
 
@@ -51,12 +52,17 @@ export function QuestionItem({ item, currentQuestionId }: Props) {
 			answerService.createResult(data),
 		onSuccess() {
 			setIsLoading(false)
-			const nextLink = getNextLink()
-			if (nextLink === undefined) return
+			correctAnswer
+				? messageApi.success('Ответ правильный')
+				: messageApi.error('Ответ неверный')
 			messageApi.success('Ответ отправлен')
-			window.location.replace(
-				`${DASHBOARD_PAGES.QUIZZES}/${item.quizId}/questions/${nextLink}`
-			)
+			setTimeout(() => {
+				const nextLink = getNextLink()
+				if (nextLink === undefined) return
+				window.location.replace(
+					`${DASHBOARD_PAGES.QUIZZES}/${item.quizId}/questions/${nextLink}`
+				)
+			}, 2000)
 		},
 		onError(error) {
 			setIsLoading(false)
@@ -70,11 +76,13 @@ export function QuestionItem({ item, currentQuestionId }: Props) {
 			return
 		}
 
+		const tempIsCorrect = chosenId === item.correctAnswerId
+		setCorrectAnswer(tempIsCorrect)
 		const data: IUserAnswerFormState = {
 			questionId: item.id,
 			quizId: item.quizId,
 			answerId: chosenId,
-			isCorrect: chosenId == item.correctAnswerId,
+			isCorrect: tempIsCorrect,
 		}
 		setIsLoading(true)
 		mutate(data)

@@ -1,6 +1,3 @@
-'use client'
-
-import { StyleProvider } from '@ant-design/cssinjs'
 import { Card } from 'antd'
 import Link from 'next/link'
 
@@ -14,18 +11,16 @@ interface Props {
 
 export default function LectureItem({ item }: Props) {
 	return (
-		<StyleProvider layer>
-			<Link
-				href={`${DASHBOARD_PAGES.LECTURES}/${item.id}`}
-				className='w-full'
+		<Link
+			href={`${DASHBOARD_PAGES.LECTURES}/${item.id}`}
+			className='w-full'
+		>
+			<Card
+				className='font-bold'
+				hoverable
 			>
-				<Card
-					className='font-bold'
-					hoverable
-				>
-					{item.title}
-				</Card>
-			</Link>
-		</StyleProvider>
+				{item.title}
+			</Card>
+		</Link>
 	)
 }
