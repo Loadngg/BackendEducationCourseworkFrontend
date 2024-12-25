@@ -19,7 +19,7 @@ export default function LectureItem({ item }: Props) {
 				className='font-bold'
 				hoverable
 			>
-				{item.title}
+				{item.id}. {item.title}
 			</Card>
 		</Link>
 	)

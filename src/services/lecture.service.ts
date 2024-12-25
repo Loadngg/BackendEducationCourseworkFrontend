@@ -7,7 +7,11 @@ class LectureService {
 
 	async getAll() {
 		const response = await axiosWithAuth.get<ILecture[]>(this.BASE_URL)
-		return response.data
+		let data = response.data
+		if (data.length > 0) {
+			data = data.toSorted((a, b) => Number(a.id) - Number(b.id))
+		}
+		return data
 	}
 
 	async getById(id: string) {

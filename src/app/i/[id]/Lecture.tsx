@@ -5,6 +5,9 @@ import { useQuery } from '@tanstack/react-query'
 import { Breadcrumb, Card, Divider, Skeleton, Space } from 'antd'
 import { useParams } from 'next/navigation'
 import Markdown from 'react-markdown'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import remarkGfm from 'remark-gfm'
 
 import MaterialList from '@/components/ui/MaterialList'
 import { Wrapper } from '@/components/ui/Wrapper'
@@ -52,9 +55,40 @@ export function Lecture() {
 						title={data?.title}
 						className='w-full'
 					>
-						<Markdown>{data?.text}</Markdown>
-						<Divider orientation='left'>Материалы лекции</Divider>
-						<MaterialList materials={data?.materials} />
+						<Markdown
+							className={'markdownContent'}
+							children={data?.text}
+							remarkPlugins={[remarkGfm]}
+							components={{
+								code(props) {
+									const { children, className, node, ...rest } = props
+									const match = /language-(\w+)/.exec(className || '')
+									return match ? (
+										<SyntaxHighlighter
+											children={String(children).replace(/\n$/, '')}
+											language={match[1]}
+											showLineNumbers
+											wrapLongLines
+											style={oneDark}
+										/>
+									) : (
+										<code
+											{...rest}
+											className={className}
+										>
+											{children}
+										</code>
+									)
+								},
+							}}
+						/>
+						{data?.materials?.length != undefined &&
+							data?.materials?.length > 0 && (
+								<>
+									<Divider orientation='left'>Материалы лекции</Divider>
+									<MaterialList materials={data?.materials} />
+								</>
+							)}
 					</Card>
 				)}
 			</Space>

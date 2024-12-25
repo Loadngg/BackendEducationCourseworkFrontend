@@ -12,7 +12,7 @@ export function Wrapper({
 		<Flex className='h-screen'>
 			<Sidebar />
 			<Layout>
-				<Content className='m-4'>{children}</Content>
+				<Content className='m-4 overflow-y-scroll'>{children}</Content>
 				<Footer className='text-center'>
 					Coursework of Backend Education y.2024
 				</Footer>
